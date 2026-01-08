@@ -19,20 +19,32 @@ namespace TaskManager.API
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<ActionResult<List<TaskItem>>> Get()
         {
-            
-            var tasks = await _context.Tasks.ToListAsync();
-            return Ok(tasks);
+            return Ok(await _context.Tasks.ToListAsync());
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] TaskItem task)
+        public async Task<ActionResult<TaskItem>> Create(TaskItem Tasks)
         {
-            
-            _context.Tasks.Add(task);
+            if (Tasks is null)
+                return BadRequest();
+
+            _context.Tasks.Add(Tasks);
             await _context.SaveChangesAsync();
-            return CreatedAtAction(nameof(Get), new { id = task.Id }, task);
+
+            return CreatedAtAction(nameof(Get), new { id = Tasks.Id }, Tasks);
+        }
+
+        [HttpGet("{id}")]
+
+        public async Task<ActionResult<TaskItem>> GetById(int id)
+        {
+            var task = await _context.Tasks.FindAsync(id);
+            if (task is null)
+                return NotFound();
+
+            return Ok(task);
         }
 
         [HttpPut("{id}")] 
@@ -45,7 +57,7 @@ namespace TaskManager.API
             task.IsDone = updated.IsDone;
             await _context.SaveChangesAsync();
 
-            return Ok(task);
+            return NoContent();
         }
 
         [HttpDelete("{id}")]
