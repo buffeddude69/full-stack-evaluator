@@ -1,13 +1,25 @@
-import './App.css'
-import Tasks from "./Tasks"
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import NavBar from "./Components/NavBar";
+import CreateTask from "./Components/CreateTask";
+import EditTask from "./Components/EditTask";
+import TaskDetail from "./Components/TaskDetail";
+import TaskList from "./Components/TaskList";
+import { Home } from "./Components/Home";
 
-function App() {
+const App = () => {
   return (
-    <div className="app">
-      <h1>📝 React Task Evaluator</h1>
-      <Tasks />
-    </div>
-  );
-}
+    <Router>
+      <NavBar />
 
-export default App
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/tasks" element={<TaskList />} />
+        <Route path="/create-task" element={<CreateTask />} />
+        <Route path="/edit-task/:id" element={<EditTask />} />
+        <Route path="/task-detail/:id" element={<TaskDetail />} />
+      </Routes>
+    </Router>
+  );
+};
+
+export default App;
