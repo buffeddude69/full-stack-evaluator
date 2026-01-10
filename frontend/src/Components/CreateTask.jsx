@@ -54,6 +54,9 @@ const CreateTask = () => {
                 <button type="submit" disabled={loading}>
                     {loading ? 'Creating...' : 'Create Task'}
                 </button>
+                <button type="button" onClick={() => navigate('/')}>
+                    ← Back
+                </button>
             </form>
         </div>
     );

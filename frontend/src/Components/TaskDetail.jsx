@@ -38,6 +38,9 @@ const TaskDetail = () => {
             <p><strong>Status:</strong> {task.isDone ? 'Done ✅' : 'Not Done ❌'}</p>
             <Link to={`/edit-task/${task.id}`}>Edit</Link>
             <button onClick={handleDelete}>Delete</button>
+            <button type="button" onClick={() => navigate(-1)}>
+                    ← Back
+                </button>
         </div>
     );
 };

@@ -8,15 +8,6 @@ function TaskList() {
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
 
-  const handleDelete = async (id) => {
-    try {
-      await api.delete(`/tasks/${id}`);
-      setTasks(tasks.filter(task => task.id !== id));
-    } catch {
-      setError('Failed to delete task');
-    }
-  };
-
   useEffect(() => {
     api.get('/tasks')
       .then(res => setTasks(res.data))
